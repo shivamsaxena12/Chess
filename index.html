@@ -8,7 +8,7 @@
 
         <div class="main_box" >
                 
-            <div ng-repeat="gridElement in playArea" id="{{gridElement.sno}}" class="squareGrid" ng-class="{'float':!($index%8),'bb':((gridElement.row+gridElement.sno)%2),'ww':!((gridElement.row+gridElement.sno)%2)}" ng-init="gridElement.sno=gridElement.sno+$index;" >
+            <div ng-repeat="gridElement in playArea" id="{{gridElement.sno}}" class="squareGrid" ng-class="{'float':!($index%8),'bb':((gridElement.row+gridElement.sno)%2),'ww':!((gridElement.row+gridElement.sno)%2)}" ng-init="gridElement.sno=gridElement.sno+$index;" ng-click="clicked($event,gridElement)">
 
                     curr:{{ gridElement.sno }}
                     row:{{gridElement.row}} col:{{gridElement.col}}
