@@ -1,0 +1,46 @@
+*{
+    margin : 0px;
+    padding : 0px;
+}
+.main_box{
+
+}
+
+
+.squareGrid {
+    width:9%;
+    height: 12%;
+    
+    float: left;
+    color: white;
+    text-align: center;
+    border:1px solid black;
+   
+    font-size: 10px;
+  }
+  
+  .squareGrid.float {
+    clear: both;
+  }
+
+.bb
+{
+    background: rgb(97, 63, 1);
+    
+}
+.ww
+{
+    background: rgb(206, 186, 3);
+  
+}
+
+.play_icon
+{
+    height:70%;
+}
+
+.active
+{
+    background: rgb(255, 115, 0);
+    transition: all 0.5s;
+}
