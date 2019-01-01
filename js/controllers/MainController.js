@@ -8,11 +8,12 @@ MainController = ChessApp.controller('MainController',function($scope){
         for(var i = 0 ; i<64 ; i++)
         {
             //Pawn
-            if($scope.playArea[i].row==1)
+            if($scope.playArea[i].row==1 )
                 {   
                     $scope.playArea[i].property.color="White";
                     $scope.playArea[i].property.type="Pawn";
                 }
+                
             
             if($scope.playArea[i].row==6)
             {   
@@ -111,19 +112,59 @@ MainController = ChessApp.controller('MainController',function($scope){
         return data;
     };
 
-    $scope.clicked = function($event,pos){
-        pos.isActive=!pos.isActive;
-        console.log(pos.sno);
-        console.log(pos.row,pos.col);
-        
-        if(pos.isActive==true){
-            highlight(pos.sno);
-        }
-        else
-            antiHighlight(pos.sno);
+    var lastClicked;
 
-        validMove(pos);
+    $scope.clicked = function($event,pos){
+
+        console.log("Click function START");
+            if(!lastClicked)        //FIRST CLICK
+            {       
+                lastClicked=pos;
+                pos.isActive=!pos.isActive;
+                console.log(pos.sno);
+                console.log(pos.row,pos.col);
+                
+                //Highlighting the current pos
+                if(pos.isActive==true){
+                    highlight(pos.sno);
+                }
+                else
+                    antiHighlight(pos.sno);
         
+                var valid = validMove(pos);
+                nextValid=valid;                //this variable is used in Move function so that swapping can only be done on valid blocks
+                //Highlighting Valid Moves
+                if(pos.isActive == true)
+                {
+                    for(var i=0 ; i<valid.length ; i++)
+                    {
+                        highlight(pos.sno+valid[i]);
+                    }
+                }
+                else
+                {
+                    for(var i=0 ; i<valid.length ; i++)
+                    {
+                        antiHighlight(pos.sno+valid[i]);
+                    }
+                }
+        
+            }
+            else        //SECOND CLICK
+            {
+                console.log("ACTIVE AREAS : "+lastClicked.row+"  next pos :"+pos.row );
+                move(lastClicked,pos);
+                lastClicked=null;
+                for(var i=0 ; i<64 ; i++)           //ANTI HIGHLIGHTING ALL BLOCKS
+                {
+                    $scope.playArea[i].isActive=false;
+                    antiHighlight(i);
+                }    
+            }   
+            
+        
+        
+        console.log("Click function END");
     };
 
     var highlight = function(sno){
@@ -137,43 +178,77 @@ MainController = ChessApp.controller('MainController',function($scope){
         
         var valid=[];
 
-        //   PAWN
-        if(pos.property.type=="Pawn")
+        
+        if(pos.property.type=="Pawn")   //PAWN
         {
-            if(pos.property.color=="White")
+             
+            for(var i=0 ; i<64 ; i++)
             {
-                console.log("WhitePawn");
-                valid.push(7,8,9);
-                if(pos.row==1)
-                    valid.push(16);
-            }
-            else
-            {
-                console.log("BlackPawn");
-                valid.push(-7,-8,-9);
-                if(pos.row==6)
-                valid.push(-16);
+                if(pos.property.color=="White")     //WHITE_PAWN
+                {  
+                    if(((pos.sno+8) == $scope.playArea[i].sno ) && ($scope.playArea[i].property.color==""))
+                    {
+                        valid.push(8);
+                        if(pos.row == 1 && ((pos.sno+16) == $scope.playArea[i+8].sno ) && ($scope.playArea[i+8].property.color==""))
+                        {
+                            valid.push(16);
+                        }
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row+1)&& ($scope.playArea[i].col == (pos.col-1))) && ($scope.playArea[i].property.color=="Black"))
+                    {
+                        valid.push(7);
+                    }
+                    else if(($scope.playArea[i].row == (pos.row+1)&& ($scope.playArea[i].col == (pos.col+1)))  && ($scope.playArea[i].property.color=="Black"))
+                    {
+                        valid.push(9);
+                    }
+                }
+                else    //BLACK_PAWN
+                {
+                        if(((pos.sno-8) == $scope.playArea[i].sno ) && ($scope.playArea[i].property.color==""))
+                        {
+                            valid.push(-8);
+                            if(pos.row == 6 && ((pos.sno-16) == $scope.playArea[i-8].sno ) && ($scope.playArea[i-8].property.color==""))
+                        {
+                            valid.push(-16);
+                        }
+                        }
+                        if(($scope.playArea[i].row == (pos.row-1)&& ($scope.playArea[i].col == (pos.col+1))) && ($scope.playArea[i].property.color=="White"))
+                        {
+                            valid.push(-7);
+                        }
+                        else if(($scope.playArea[i].row == (pos.row-1)&& ($scope.playArea[i].col == (pos.col-1)))  && ($scope.playArea[i].property.color=="White"))
+                        {
+                            valid.push(-9);
+                        }
+                }
+                
+                
 
             }
         }
 
-        if(pos.isActive == true)
-            {
-                for(var i=0 ; i<valid.length ; i++)
-                {
-                    highlight(pos.sno+valid[i]);
-                }
-            }
-            else
-            {
-                for(var i=0 ; i<valid.length ; i++)
-                {
-                    antiHighlight(pos.sno+valid[i]);
-                }
-            }
+        return valid;
+     
 
     }
+    var nextValid=[];
+    var move = function(currentPos,nextPos){
+        console.log("MOVE function ENTERED \n");
 
+        for(i=0 ; i<nextValid.length ; i++)
+        {
+            
+            if(currentPos.sno!=nextPos.sno && nextPos.sno == (currentPos.sno+nextValid[i]))
+            {
+                nextPos.property.color=currentPos.property.color;
+                nextPos.property.type=currentPos.property.type;
+                currentPos.property.color="";
+                currentPos.property.type="";
+            }
+        }
+    }
     initData();
     
 });
