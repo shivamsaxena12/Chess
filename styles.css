@@ -44,3 +44,20 @@
     background: rgb(255, 115, 0);
     transition: all 0.5s;
 }
+
+.black_kills
+{
+   
+    border : 1px solid black;
+}
+.white_kills
+{
+    border : 1px solid black;
+}
+.kill_icon
+{
+    height : 8%;
+    display: block;
+   float: left;
+}
+

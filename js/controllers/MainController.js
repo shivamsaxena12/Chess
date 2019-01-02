@@ -1,9 +1,16 @@
 MainController = ChessApp.controller('MainController',function($scope){
-   
-   
+    
+    var valid=[];
+    var lastClicked;
+
     var initData = function()
     {
         $scope.playArea = createPlayer();
+        $scope.kills={
+            black:[],
+            white:[]
+        };
+
         console.log("NEW GAME");
         for(var i = 0 ; i<64 ; i++)
         {
@@ -112,7 +119,7 @@ MainController = ChessApp.controller('MainController',function($scope){
         return data;
     };
 
-    var lastClicked;
+   
 
     $scope.clicked = function($event,pos){
 
@@ -121,34 +128,40 @@ MainController = ChessApp.controller('MainController',function($scope){
             {       
                 lastClicked=pos;
                 pos.isActive=!pos.isActive;
-                console.log(pos.sno);
-                console.log(pos.row,pos.col);
+                console.log("\n\nCOLOR : "+lastClicked.property.color);
+                if(!lastClicked.property.color)
+                {
+                    lastClicked=null;
+                    return;
+                }
+                    console.log(pos.sno);
+                    console.log(pos.row,pos.col);
                 
-                //Highlighting the current pos
-                if(pos.isActive==true){
-                    highlight(pos.sno);
-                }
-                else
-                    antiHighlight(pos.sno);
-        
-                var valid = validMove(pos);
-                nextValid=valid;                //this variable is used in Move function so that swapping can only be done on valid blocks
-                //Highlighting Valid Moves
-                if(pos.isActive == true)
-                {
-                    for(var i=0 ; i<valid.length ; i++)
-                    {
-                        highlight(pos.sno+valid[i]);
+                    //Highlighting the current pos
+                    if(pos.isActive==true){
+                        highlight(pos.sno);
                     }
-                }
-                else
-                {
-                    for(var i=0 ; i<valid.length ; i++)
-                    {
-                        antiHighlight(pos.sno+valid[i]);
-                    }
-                }
+                    else
+                        antiHighlight(pos.sno);
         
+                    validMove(pos);
+                
+                    //Highlighting Valid Moves
+                    if(pos.isActive == true)
+                    {
+                        for(var i=0 ; i<valid.length ; i++)
+                        {
+                            highlight(pos.sno+valid[i]);
+                        }
+                    }
+                    else
+                    {
+                        for(var i=0 ; i<valid.length ; i++)
+                        {
+                            antiHighlight(pos.sno+valid[i]);
+                        }
+                    }
+                
             }
             else        //SECOND CLICK
             {
@@ -173,10 +186,10 @@ MainController = ChessApp.controller('MainController',function($scope){
     var antiHighlight = function(sno){
         document.getElementById(sno).classList.remove("active");
     }
-
+    
     var validMove = function(pos){
         
-        var valid=[];
+        valid=[];
 
         
         if(pos.property.type=="Pawn")   //PAWN
@@ -229,19 +242,130 @@ MainController = ChessApp.controller('MainController',function($scope){
             }
         }
 
-        return valid;
+
+
+        if(pos.property.type=="Knight")   //Knight
+        {
+             
+            for(var i=0 ; i<64 ; i++)
+            {
+                if(pos.property.color=="White")     //WHITE_KNIGHT
+                {  
+                    if(($scope.playArea[i].row == (pos.row+2)&& ($scope.playArea[i].col == (pos.col-1))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(15);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row+2)&& ($scope.playArea[i].col == (pos.col+1))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(17);
+                    }
+
+                    if(($scope.playArea[i].row == (pos.row-2)&& ($scope.playArea[i].col == (pos.col+1))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(-15);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row-2)&& ($scope.playArea[i].col == (pos.col-1))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(-17);
+                    }
+
+                    if(($scope.playArea[i].row == (pos.row-1)&& ($scope.playArea[i].col == (pos.col+2))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(-6);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row-1)&& ($scope.playArea[i].col == (pos.col-2))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(-10);
+                    }
+
+                    if(($scope.playArea[i].row == (pos.row+1)&& ($scope.playArea[i].col == (pos.col-2))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(6);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row+1)&& ($scope.playArea[i].col == (pos.col+2))) && ($scope.playArea[i].property.color!="White"))
+                    {
+                        valid.push(10);
+                    }
+
+                }
+                else    //BLACK_KNIGHT
+                {
+                    if(($scope.playArea[i].row == (pos.row+2)&& ($scope.playArea[i].col == (pos.col-1))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(15);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row+2)&& ($scope.playArea[i].col == (pos.col+1))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(17);
+                    }
+
+                    if(($scope.playArea[i].row == (pos.row-2)&& ($scope.playArea[i].col == (pos.col+1))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(-15);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row-2)&& ($scope.playArea[i].col == (pos.col-1))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(-17);
+                    }
+
+                    if(($scope.playArea[i].row == (pos.row-1)&& ($scope.playArea[i].col == (pos.col+2))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(-6);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row-1)&& ($scope.playArea[i].col == (pos.col-2))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(-10);
+                    }
+
+                    if(($scope.playArea[i].row == (pos.row+1)&& ($scope.playArea[i].col == (pos.col-2))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(6);
+                    }
+                    
+                    if(($scope.playArea[i].row == (pos.row+1)&& ($scope.playArea[i].col == (pos.col+2))) && ($scope.playArea[i].property.color!="Black"))
+                    {
+                        valid.push(10);
+                    }
+                }
+                
+                
+
+            }
+        }
+
+
      
 
     }
-    var nextValid=[];
+    
     var move = function(currentPos,nextPos){
         console.log("MOVE function ENTERED \n");
 
-        for(i=0 ; i<nextValid.length ; i++)
+       
+        for(i=0 ; i<valid.length ; i++)
         {
             
-            if(currentPos.sno!=nextPos.sno && nextPos.sno == (currentPos.sno+nextValid[i]))
+            if(currentPos.sno!=nextPos.sno && nextPos.sno == (currentPos.sno+valid[i]))
             {
+                
+                var temp="";
+                if(nextPos.property.color=="Black")
+                {
+                    $scope.kills.white.push(nextPos.property.color+nextPos.property.type);
+                }
+                else if(nextPos.property.color=="White")
+                {
+                    $scope.kills.black.push(nextPos.property.color+nextPos.property.type);
+                }
+
+            
                 nextPos.property.color=currentPos.property.color;
                 nextPos.property.type=currentPos.property.type;
                 currentPos.property.color="";
