@@ -2,21 +2,28 @@
     margin : 0px;
     padding : 0px;
 }
-.main_box{
 
+body{
+    display: flex;
+}
+.main_box{
+    border:2px solid red;
+    flex: initial;
+    width:680px;
+    z-index: 1;
 }
 
 
 .squareGrid {
-    width:9%;
-    height: 12%;
+    width:80px;
+    height: 80px;
     
     float: left;
     color: white;
     text-align: center;
     border:1px solid black;
    
-    font-size: 10px;
+    font-size: 8px;
   }
   
   .squareGrid.float {
@@ -25,18 +32,18 @@
 
 .bb
 {
-    background: rgb(97, 63, 1);
+    background: rgb(180, 100, 25);
     
 }
 .ww
 {
-    background: rgb(206, 186, 3);
-  
+    background: rgb(255, 205, 68);
+
 }
 
 .play_icon
 {
-    height:70%;
+    height:70px;
 }
 
 .active
@@ -45,19 +52,79 @@
     transition: all 0.5s;
 }
 
+.kills{
+   flex:1;
+    width:20% ;
+    z-index: 1;
+}
+
 .black_kills
 {
-   
-    border : 1px solid black;
+    border : 2px solid red;
 }
 .white_kills
 {
-    border : 1px solid black;
+    border : 1px solid blue;
+    
 }
 .kill_icon
 {
-    height : 8%;
-    display: block;
-   float: left;
+    height: auto;
+    width:15%;
+}
+
+.info{
+    z-index: 1;
+  border: 1px solid black;
+  flex:2;
+    text-align: center;
+}
+.heading{
+ 
+border:1px solid black;
+}
+
+#modal
+{
+    
+    z-index: 5;
+    position:fixed;
+    top:0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background: rgb(1, 1, 1,0.9);
+    /*background-color: rgba(1, 1, 1, 1);*/
+    border: 1px solid black;
+    transition: all 0.5s;
+}  
+
+#inner_modal{
+    padding: 20px 40px;
+    text-align: center;
+    background: rgb(91, 133, 189);
+    
+    width: fit-content;
+    position: inherit;
+    margin-left: 40vw;
+    margin-top: 30vh;
+    
+    box-shadow: 3px 3px 5px 1px;
+
+    
+}
+
+.player_input{
+    margin-bottom: 4vh;
+    border:0px;
+   
+}
+.player_input:focus{
+    border-bottom: 2px solid ;
+}
+#modal_chess{
+    margin-bottom:3vh;
+    font-size: 25px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
