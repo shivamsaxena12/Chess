@@ -6,8 +6,8 @@ MainController = ChessApp.controller('MainController', function ($scope) {
     var initData = function () {
         $scope.playArea = createPlayer();
         $scope.kills = {
-            black: ["WhitePawn","WhiteKing"],
-            white: ["BlackPawn","BlackKing"]
+            black: [],
+            white: []
         };
 
         console.log("NEW GAME");

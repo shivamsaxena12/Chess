@@ -5,23 +5,25 @@
 
 body{
     display: flex;
+    padding: 1%;
+    background: linear-gradient(to left, #16222a, #3a6073); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .main_box{
-    border:2px solid red;
-    flex: initial;
-    width:680px;
+    
+   margin:0px 10px; 
+    width:fit-content;
     z-index: 1;
+    box-shadow: 2px 3px 25px 1px;
 }
 
 
 .squareGrid {
-    width:80px;
-    height: 80px;
-    
+    width:76px;
+    height: 76px;
+    border: 1px solid black;
     float: left;
     color: white;
     text-align: center;
-    border:1px solid black;
    
     font-size: 8px;
   }
@@ -48,41 +50,113 @@ body{
 
 .active
 {
-    background: rgb(255, 115, 0);
+    background: rgb(236, 123, 57);
     transition: all 0.5s;
 }
 
 .kills{
    flex:1;
-    width:20% ;
+    
     z-index: 1;
+    background:rgba(179, 79, 21, 0);
 }
 
-.black_kills
-{
-    border : 2px solid red;
-}
-.white_kills
-{
-    border : 1px solid blue;
-    
-}
 .kill_icon
 {
+    padding: 3px;
     height: auto;
-    width:15%;
+    width:30%;
 }
 
 .info{
     z-index: 1;
-  border: 1px solid black;
-  flex:2;
+    flex:4;
     text-align: center;
+    background-color: #e7e5e4;
+    height: fit-content;
+    padding: 20px 0px 80px 0px;
+    margin-bottom:auto; 
+    margin-top:auto; 
 }
-.heading{
+
+
+h1 {
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    font-size: 72px;
+    padding-top: 10px;
+    padding-bottom: 80px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+  }
+  h1.elegantshadow {
+    color: #131313;
+
+    letter-spacing: 0.10em;
+    text-shadow: 2px 2px 8px rgb(110, 108, 108);
+  }
  
-border:1px solid black;
+  .player_name{   
+    margin-right:5%;
+    background: #b44a37;
+    border-radius:4px;
+    padding: 25px; 
+    font-size: 20px;
+    color: #fff;
+    display: inline;
+    box-shadow: 2px 2px 14px 0px black;
+    
+  }
+
+.new_game{
+   
+    margin-top: 50px;
 }
+  button{
+    background:rgb(26, 171, 164);
+    color:#fff;
+    border:none;
+    position:relative;
+    height:40px;
+    font-size:1em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    
+    
+  }
+  button:hover{
+    background-color: #e7e5e4;
+
+    color:rgb(26, 171, 164);
+
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background:rgb(26, 171, 164);
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+  
+ 
+
+
+
 
 #modal
 {
@@ -94,7 +168,6 @@ border:1px solid black;
     width: 100%;
     height: 100%;
     background: rgb(1, 1, 1,0.9);
-    /*background-color: rgba(1, 1, 1, 1);*/
     border: 1px solid black;
     transition: all 0.5s;
 }  
@@ -102,11 +175,11 @@ border:1px solid black;
 #inner_modal{
     padding: 20px 40px;
     text-align: center;
-    background: rgb(91, 133, 189);
+    background-image:  linear-gradient(135deg, #6e8efb, #8277e3);
     
     width: fit-content;
     position: inherit;
-    margin-left: 40vw;
+    margin-left: 35vw;
     margin-top: 30vh;
     
     box-shadow: 3px 3px 5px 1px;
@@ -116,15 +189,51 @@ border:1px solid black;
 
 .player_input{
     margin-bottom: 4vh;
-    border:0px;
-   
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+   border-bottom: 2px solid #51f3ff;
+   padding: 3px;
+   background:none;
+   outline: none;
+   transition-property: border;
+    
+    transition: all 0.3s ease-out; 
+
 }
-.player_input:focus{
-    border-bottom: 2px solid ;
+.player_input:hover{
+    border-bottom: 2px solid rgb(31, 116, 196); 
 }
+
+
+ .player_input:focus{
+    
+    border-bottom: 2px solid rgb(31, 116, 196); 
+} 
+
+.player_input::placeholder{
+    color: rgba(243, 239, 239, 0.459);   
+  
+}
+
 #modal_chess{
     margin-bottom:3vh;
     font-size: 25px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#submitBtn{
+    color:white;
+    border: 2px solid white;
+    border-radius: 2px;
+    padding: 5px;
+    background: none;
+    width: 85px;
+}
+
+#submitBtn:hover{
+    transform: scale(1.1);
+    transition: all 0.4s;
+    cursor: pointer;
 }
 

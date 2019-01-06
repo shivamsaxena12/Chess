@@ -5,6 +5,9 @@
     <title>CHESS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -25,8 +28,8 @@
         <div ng-repeat="gridElement in playArea" id="{{gridElement.sno}}" class="squareGrid" ng-class="{'float':!($index%8),'bb':((gridElement.row+gridElement.sno)%2),'ww':!((gridElement.row+gridElement.sno)%2)}"
             ng-init="gridElement.sno=gridElement.sno+$index;" ng-click="clicked($event,gridElement)">
 
-            curr:{{ gridElement.sno }}
-            row:{{gridElement.row}} col:{{gridElement.col}}
+            <!-- curr:{{ gridElement.sno }}
+            row:{{gridElement.row}} col:{{gridElement.col}} -->
 
             <img ng-if="gridElement.property.color" class="play_icon" ng-src="images/{{gridElement.property.color}}{{gridElement.property.type}}.png">
 
@@ -35,20 +38,27 @@
     </div>
 
     <div class="info">
-        <h4 class="heading">CHESS</h4>
-        <button ng-click="newGame()">NEW GAME</button>
+        <h1 class="elegantshadow">CHESS</h1>
+        <div class="player_name">
+            {{player1}}
+        </div>
+        <div class="player_name">
+            {{player2}}
+        </div>
+        <div class="new_game">
+            <button ng-click="newGame()">NEW GAME</button>
+        </div>
     </div>
 
     <div id="modal">
         <div id="inner_modal">
         <p id="modal_chess">CHESS</p>
         <form  ng-submit="closeModal()">
-            <label for="player1" >PLAYER 1  </label><br />
-            <input type="text" class="player_input" ng-model="player1" placeholder="Player 1"/> <br />
-    
-            <label for="player2" >PLAYER 2 </label><br />
-                <input type="text" class="player_input" ng-model="player2" placeholder="Player 2"/> <br />
-            <input type="submit"  value="PLAY">
+            
+            <input type="text" class="player_input" ng-model="player1" placeholder="Player 1" style="margin-right:20px;"/>
+            
+            <input type="text" class="player_input" ng-model="player2" placeholder="Player 2"/><br/>
+            <input id="submitBtn" type="submit"  value="PLAY">
         </form>
         </div>
     </div>
